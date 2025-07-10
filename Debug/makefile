@@ -52,6 +52,9 @@ default.size.stdout \
 OBJDUMP_LIST += \
 RS485_EjemploContadores.list \
 
+OBJCOPY_HEX += \
+RS485_EjemploContadores.hex \
+
 
 # All Target
 all: main-build
@@ -75,12 +78,17 @@ RS485_EjemploContadores.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TO
 	@echo 'Finished building: $@'
 	@echo ' '
 
+RS485_EjemploContadores.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "RS485_EjemploContadores.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) RS485_EjemploContadores.elf RS485_EjemploContadores.list RS485_EjemploContadores.map default.size.stdout
+	-$(RM) RS485_EjemploContadores.elf RS485_EjemploContadores.hex RS485_EjemploContadores.list RS485_EjemploContadores.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'
