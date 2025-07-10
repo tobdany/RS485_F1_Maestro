@@ -1,8 +1,5 @@
-../Core/Src/app_main.c:14:6:UART_SendString	1
-../Core/Src/app_main.c:26:6:HAL_UART_RxCptlCallback	1
-../Core/Src/app_main.c:35:6:HAL_UART_txCptlCallback	1
-../Core/Src/app_main.c:39:6:HAL_UART_ErrorCallback	1
-../Core/Src/app_main.c:45:6:_rs485_set_mode	3
-../Core/Src/app_main.c:60:6:_rs485_write32	1
-../Core/Src/app_main.c:68:6:_rs485_init	1
-../Core/Src/app_main.c:74:6:app_main	6
+../Core/Src/app_main.c:11:6:UART_SendString	1
+../Core/Src/app_main.c:20:6:HAL_UART_RxCptlCallback	1
+../Core/Src/app_main.c:24:6:HAL_UART_txCptlCallback	1
+../Core/Src/app_main.c:28:6:HAL_UART_ErrorCallback	1
+../Core/Src/app_main.c:33:6:app_main	1
