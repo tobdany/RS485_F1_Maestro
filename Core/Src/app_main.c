@@ -15,7 +15,7 @@ void UART_SendString(UART_HandleTypeDef *huart, const char *str) {
     // Asegurarse de que el modo RS485 esté en TRANSMIT antes de enviar
     _rs485_set_mode(RS485_MODE_TRANSMIT);
     // Enviar la cadena de texto
-    HAL_UART_Transmit(huart, (uint8_t*)str, strlen(str), 100); // 100ms timeout
+    HAL_UART_Transmit(huart, (uint8_t*)str, strlen(str), 90); // 100ms timeout
     // Volver al modo RECEIVE después de enviar
     _rs485_set_mode(RS485_MODE_RECEIVE);
 }
