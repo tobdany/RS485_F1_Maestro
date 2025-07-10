@@ -183,8 +183,8 @@ void _rs485_init(){
  80001dc:	4b06      	ldr	r3, [pc, #24]	@ (80001f8 <_rs485_init+0x20>)
  80001de:	2200      	movs	r2, #0
  80001e0:	601a      	str	r2, [r3, #0]
-	_rs485_set_mode(RS485_MODE_RECEIVE);
- 80001e2:	2001      	movs	r0, #1
+	_rs485_set_mode(RS485_MODE_TRANSMIT);
+ 80001e2:	2000      	movs	r0, #0
  80001e4:	f7ff ffc2 	bl	800016c <_rs485_set_mode>
 	HAL_UART_Receive_IT(&huart1,(uint8_t*)&rxValue_aux,sizeof(uint32_t));
  80001e8:	2204      	movs	r2, #4

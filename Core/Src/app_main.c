@@ -55,7 +55,7 @@ void _rs485_write32(uint32_t Value){
 
 void _rs485_init(){
 	txvalue=0;
-	_rs485_set_mode(RS485_MODE_RECEIVE);
+	_rs485_set_mode(RS485_MODE_TRANSMIT);
 	HAL_UART_Receive_IT(&huart1,(uint8_t*)&rxValue_aux,sizeof(uint32_t));
 }
 void app_main(void)
