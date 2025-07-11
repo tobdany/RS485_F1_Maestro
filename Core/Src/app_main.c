@@ -69,16 +69,15 @@ void app_main(void) {
     LastRequestTime = HAL_GetTick(); // Para controlar cuándo enviamos la última solicitud
 
     while (1) {
-        // MAESTRO: Envía una solicitud cada 1 segundo
-        if ((HAL_GetTick() - LastRequestTime) > 1000) {
-            LastRequestTime = HAL_GetTick();
-            // El Maestro envía una solicitud al Esclavo 1 (por ejemplo, el valor 1)
-            // Podrías codificar esto mejor: 0x01000000 para "solicitar dato de Esclavo 1"
-            _rs485_write32(currentSlaveID); // Enviamos el ID del esclavo como "solicitud"
+        // MAESTRO: Envía una solicitud cada dos segundos a partir de enviar la solicitud
+        if ((HAL_GetTick() - LastRequestTime) > 2000) {
+
+            _rs485_write32(currentSlaveID);
             UART_SendString(&huart1, "MAESTRO: Solicitud enviada a Esclavo ");
             char slaveID_str[10];
             sprintf(slaveID_str, "%u\r\n", currentSlaveID);
             UART_SendString(&huart1, slaveID_str);
+            LastRequestTime = HAL_GetTick();
         }
 
         // MAESTRO: Procesar respuesta del esclavo

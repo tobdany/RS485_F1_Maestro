@@ -273,45 +273,44 @@ void app_main(void) {
  800027a:	6013      	str	r3, [r2, #0]
 
     while (1) {
-        // MAESTRO: Envía una solicitud cada 1 segundo
-        if ((HAL_GetTick() - LastRequestTime) > 1000) {
+        // MAESTRO: Envía una solicitud cada dos segundos a partir de enviar la solicitud
+        if ((HAL_GetTick() - LastRequestTime) > 2000) {
  800027c:	f000 faac 	bl	80007d8 <HAL_GetTick>
  8000280:	4602      	mov	r2, r0
  8000282:	4b2f      	ldr	r3, [pc, #188]	@ (8000340 <app_main+0xf0>)
  8000284:	681b      	ldr	r3, [r3, #0]
  8000286:	1ad3      	subs	r3, r2, r3
- 8000288:	f5b3 7f7a 	cmp.w	r3, #1000	@ 0x3e8
+ 8000288:	f5b3 6ffa 	cmp.w	r3, #2000	@ 0x7d0
  800028c:	d91c      	bls.n	80002c8 <app_main+0x78>
-            LastRequestTime = HAL_GetTick();
- 800028e:	f000 faa3 	bl	80007d8 <HAL_GetTick>
- 8000292:	4603      	mov	r3, r0
- 8000294:	4a2a      	ldr	r2, [pc, #168]	@ (8000340 <app_main+0xf0>)
- 8000296:	6013      	str	r3, [r2, #0]
-            // El Maestro envía una solicitud al Esclavo 1 (por ejemplo, el valor 1)
-            // Podrías codificar esto mejor: 0x01000000 para "solicitar dato de Esclavo 1"
-            _rs485_write32(currentSlaveID); // Enviamos el ID del esclavo como "solicitud"
- 8000298:	4b2a      	ldr	r3, [pc, #168]	@ (8000344 <app_main+0xf4>)
- 800029a:	781b      	ldrb	r3, [r3, #0]
- 800029c:	4618      	mov	r0, r3
- 800029e:	f7ff ffa7 	bl	80001f0 <_rs485_write32>
+
+            _rs485_write32(currentSlaveID);
+ 800028e:	4b2d      	ldr	r3, [pc, #180]	@ (8000344 <app_main+0xf4>)
+ 8000290:	781b      	ldrb	r3, [r3, #0]
+ 8000292:	4618      	mov	r0, r3
+ 8000294:	f7ff ffac 	bl	80001f0 <_rs485_write32>
             UART_SendString(&huart1, "MAESTRO: Solicitud enviada a Esclavo ");
- 80002a2:	4929      	ldr	r1, [pc, #164]	@ (8000348 <app_main+0xf8>)
- 80002a4:	4824      	ldr	r0, [pc, #144]	@ (8000338 <app_main+0xe8>)
- 80002a6:	f7ff ff59 	bl	800015c <UART_SendString>
+ 8000298:	492b      	ldr	r1, [pc, #172]	@ (8000348 <app_main+0xf8>)
+ 800029a:	4827      	ldr	r0, [pc, #156]	@ (8000338 <app_main+0xe8>)
+ 800029c:	f7ff ff5e 	bl	800015c <UART_SendString>
             char slaveID_str[10];
             sprintf(slaveID_str, "%u\r\n", currentSlaveID);
- 80002aa:	4b26      	ldr	r3, [pc, #152]	@ (8000344 <app_main+0xf4>)
- 80002ac:	781b      	ldrb	r3, [r3, #0]
- 80002ae:	461a      	mov	r2, r3
- 80002b0:	f107 0334 	add.w	r3, r7, #52	@ 0x34
- 80002b4:	4925      	ldr	r1, [pc, #148]	@ (800034c <app_main+0xfc>)
- 80002b6:	4618      	mov	r0, r3
- 80002b8:	f002 f88a 	bl	80023d0 <siprintf>
+ 80002a0:	4b28      	ldr	r3, [pc, #160]	@ (8000344 <app_main+0xf4>)
+ 80002a2:	781b      	ldrb	r3, [r3, #0]
+ 80002a4:	461a      	mov	r2, r3
+ 80002a6:	f107 0334 	add.w	r3, r7, #52	@ 0x34
+ 80002aa:	4928      	ldr	r1, [pc, #160]	@ (800034c <app_main+0xfc>)
+ 80002ac:	4618      	mov	r0, r3
+ 80002ae:	f002 f88f 	bl	80023d0 <siprintf>
             UART_SendString(&huart1, slaveID_str);
- 80002bc:	f107 0334 	add.w	r3, r7, #52	@ 0x34
- 80002c0:	4619      	mov	r1, r3
- 80002c2:	481d      	ldr	r0, [pc, #116]	@ (8000338 <app_main+0xe8>)
- 80002c4:	f7ff ff4a 	bl	800015c <UART_SendString>
+ 80002b2:	f107 0334 	add.w	r3, r7, #52	@ 0x34
+ 80002b6:	4619      	mov	r1, r3
+ 80002b8:	481f      	ldr	r0, [pc, #124]	@ (8000338 <app_main+0xe8>)
+ 80002ba:	f7ff ff4f 	bl	800015c <UART_SendString>
+            LastRequestTime = HAL_GetTick();
+ 80002be:	f000 fa8b 	bl	80007d8 <HAL_GetTick>
+ 80002c2:	4603      	mov	r3, r0
+ 80002c4:	4a1e      	ldr	r2, [pc, #120]	@ (8000340 <app_main+0xf0>)
+ 80002c6:	6013      	str	r3, [r2, #0]
         }
 
         // MAESTRO: Procesar respuesta del esclavo
@@ -378,7 +377,7 @@ void app_main(void) {
  8000328:	490f      	ldr	r1, [pc, #60]	@ (8000368 <app_main+0x118>)
  800032a:	4803      	ldr	r0, [pc, #12]	@ (8000338 <app_main+0xe8>)
  800032c:	f7ff ff16 	bl	800015c <UART_SendString>
-        if ((HAL_GetTick() - LastRequestTime) > 1000) {
+        if ((HAL_GetTick() - LastRequestTime) > 2000) {
  8000330:	e7a4      	b.n	800027c <app_main+0x2c>
  8000332:	bf00      	nop
  8000334:	08002d48 	.word	0x08002d48
