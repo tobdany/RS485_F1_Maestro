@@ -4,5 +4,5 @@
 ../Core/Src/app_main.c:33:6:HAL_UART_ErrorCallback	1
 ../Core/Src/app_main.c:38:6:_rs485_set_mode	3
 ../Core/Src/app_main.c:49:6:_rs485_write32	1
-../Core/Src/app_main.c:55:6:_rs485_init	1
-../Core/Src/app_main.c:61:6:app_main	6
+../Core/Src/app_main.c:56:6:_rs485_init	1
+../Core/Src/app_main.c:62:6:app_main	6

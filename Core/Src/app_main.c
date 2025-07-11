@@ -48,6 +48,7 @@ void _rs485_set_mode(rs485_mode_e mode) {
 
 void _rs485_write32(uint32_t Value) {
     _rs485_set_mode(RS485_MODE_TRANSMIT);
+    HAL_Delay(5);
     HAL_UART_Transmit(&huart1, (uint8_t*)&Value, sizeof(uint32_t), 20);
     _rs485_set_mode(RS485_MODE_RECEIVE);
 }
