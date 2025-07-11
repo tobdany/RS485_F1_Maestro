@@ -18,7 +18,8 @@ void UART_SendString(UART_HandleTypeDef *huart, const char *str) {
 }
 
 //uart callbacks
-void HAL_UART_RxCptlCallback(UART_HandleTypeDef *huart) {
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     ConnTimeOut = HAL_GetTick();
     flagRx = 1; //avisa que recibió
     HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, GPIO_PIN_SET);
@@ -26,12 +27,12 @@ void HAL_UART_RxCptlCallback(UART_HandleTypeDef *huart) {
     HAL_UART_Receive_IT(huart, (uint8_t*)&rxValue_aux, sizeof(uint32_t));
 }
 
-void HAL_UART_txCptlCallback(UART_HandleTypeDef *huart) {
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 
 }
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
-    HAL_UART_Receive_IT(huart, (uint8_t*)&rxValue_aux, sizeof(uint32_t));
+	HAL_UART_Receive_IT(huart, (uint8_t*)&rxValue_aux, sizeof(uint32_t));
 }
 
 /*RS485*/
@@ -69,8 +70,8 @@ void app_main(void) {
     LastRequestTime = HAL_GetTick(); // Para controlar cuándo enviamos la última solicitud
 
     while (1) {
-        // MAESTRO: Envía una solicitud cada dos segundos a partir de enviar la solicitud
-        if ((HAL_GetTick() - LastRequestTime) > 2000) {
+        // MAESTRO: Envía una solicitud cada segundo a partir de enviar la solicitud
+        if ((HAL_GetTick() - LastRequestTime) > 1000) {
 
             _rs485_write32(currentSlaveID);
             UART_SendString(&huart1, "MAESTRO: Solicitud enviada a Esclavo ");
